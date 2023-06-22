@@ -1,0 +1,317 @@
+<div class="container-xxl py-5 ">
+  <div class="container px-5">
+    <div class="row g-0 gx-5 align-items-end">
+      <div class="col-lg-6">
+        <div class="section-header text-start mb-3 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+          <h1 class="display-5 mb-2">Shopping Cart </h1>
+          <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
+        </div>
+      </div>
+         <!-- coupen -->
+         <div >
+{{#each coupens}}
+  <div class="d-flex justify-content-center">
+    <div class="d-flex bg-danger align-items-center mt-2">
+      <h1 class="text-white px-3">{{this.name}}</h1><hr>
+      <h1 class="text-light px-2">{{this.value}}%<h5 class="text-white mr-5">OFF</h5>
+      <p class="text-white px-2">For Minimum Purchase of {{this.minAmount}}</p>
+      <p class="text-white px-2">{{this.endingDate}}</p>
+      <div class="p-2">
+        
+          <a href="#" class="btn btn-success" onclick="getCouponCode('{{this.code}}')">Get It</a>
+      
+      </div>
+    </div>
+  </div>
+{{/each}}
+
+
+
+
+                
+
+        
+      <!-- cart + summary -->
+      <section class="bg-light my-3">
+        <div class="container">
+          <div class="row">
+            <!-- cart -->
+            <div class="col-lg-9">
+              <div class="card border shadow-0">
+                <div class="m-2">
+                  <h4 class="card-title ">Your shopping cart</h4>
+                  <div class="row"> {{#each products}} {{!-- <div class="col-lg-5">
+                      <div class="me-lg-3 ">
+                        <div class="d-flex">
+                          <img src="/pro-images/{{this.product.image}}" class="border rounded me-3"
+                            style="width: 96px; height: 96px;" />
+                          <div class="">
+                            <h5 href="#" class="text-primary">{{this.product.productname}}</h5>
+                            <p class="text-muted">Yellow, Jeans</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div> --}} {{!-- <div
+                      class="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
+                      <div class="">
+                        <button class="cart-item-count mr-1"
+                          onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',-0.250,'{{this.product.productname}}')">-</button>
+                        <span id="{{this.product._id}}">{{this.quantity}}</span>
+                        <button class="cart-item-count ml-1"
+                          onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',0.250,'{{this.product.productname}}')">+</button>
+                      </div>
+                      <div class=" mx-3">
+                        <h6 class="text-muted text-nowrap">Rs.{{this.product.price}} / per item </h6> <text
+                          class="h6 mx-5">${{total}}</text>
+                      </div>
+                    </div> --}} {{!-- <div
+                      class="col-lg col-sm-6 d-flex justify-content-sm-center justify-content-md-start justify-content-lg-center justify-content-xl-end mb-2">
+                      <div class="float-md-end">
+                        <a href="#!" class="btn btn-light border px-2 icon-hover-primary"><i
+                            class="fas fa-heart fa-lg px-1 text-secondary"></i></a>
+                        <a "/removeitem/{{this.product._id}}"
+                          class="btn btn-light border text-danger icon-hover-danger"> Remove</a>
+                      </div>
+                    </div> --}} <table class="table table-hover">
+                      <tbody>
+                        <tr>
+                          <td><img src="/pro-images/{{this.product.image}}" class="border rounded "
+                              style="width: 60px; height: 60px;" /></td>
+                          <td>
+                            <h5 href="#" class="text-primary">{{this.product.productname}}</h5>
+                            <p class="text-muted">Yellow, Jeans</p>
+                          </td>
+                          <td>
+                            <div class="">
+                              <button type="button" class="btn btn-outline-primary btn-sm "
+                                onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',-0.250,'{{this.product.productname}}')">-</button>
+                              <span id="{{this.product._id}}">{{this.quantity}}</span>
+                              <button class="btn btn-outline-danger btn-sm"
+                                onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',0.250,'{{this.product.productname}}')">+</button>
+                            </div>
+                          </td>
+                          <td>
+                            <div >
+                              <h6 class="text-muted text-nowrap">Rs.{{this.product.price}}<a class="text-muted">/per Kg</a></h6>
+                            </div>
+                          </td>
+                          <td>
+                            {{!-- <p class="mb-2">Total price:</p><p class="mb-2 fw-bold text-danger">₹{{total}}</p> --}}
+                            <h6 class="text-danger text-nowrap"><a class="text-muted">Total: </a>₹ {{total}}</h6>
+                          </td>
+                          <td> <div class="float-md-end ml-2">
+                        <a href="#!" class="btn btn-light border px-2 icon-hover-primary"><i
+                            class="fas fa-heart fa-lg px-1 text-secondary"></i></a>
+                        {{!-- <a  class="btn btn-light border text-danger icon-hover-danger"> Remove</a> --}}
+                  <a href="#" class="btn btn-light border text-danger icon-hover-danger" onclick="confirmDelete(event, '{{this.product._id}}')"> Remove</a>
+
+                      </div></td>
+                        </tr>
+                      </tbody>
+                    </table> {{/each}} </div>
+                </div>
+              </div>
+            </div>
+            <!-- cart -->
+            <!-- summary -->
+            <div class="col-lg-3">
+              <div class="card mb-3 border shadow-0">
+                <div class="card-body">
+                  <form>
+                    <div class="form-group">
+                      <label class="form-label">Have coupon?</label>
+                      <div class="input-group">
+                        {{!-- <input type="text" class="form-control border" name="" placeholder="Coupon code" /> --}}
+                        <input type="text" class="form-control border" id="couponCodeInput" name="" placeholder="Coupon code" />
+                        {{!-- <button class="btn btn-light border" onclick="coupon()" >Apply</button> --}}
+                        <a href="#" class="btn btn-success" onclick="coupon()" >Apply</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="card shadow-0 border">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">Total price:</p>
+                    <p class="mb-2">₹{{grandtotal}}</p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">Discount:</p>
+                    <p id="discount" class="mb-2 text-success"></p>
+                    
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">TAX:</p>
+                    <p class="mb-2">₹00.00</p>
+                  </div>
+                  <hr />
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">Total price:</p>
+                    <p id="grandtotal" class="mb-2 fw-bold text-danger">₹{{grandtotal}}</p>
+                  </div>
+                  <div class="mt-3">
+                    <a href="/orderpage" class="btn btn-success w-100 shadow-0 mb-2"> Make Purchase </a>
+                    <a href="/profile" class="btn btn-light w-100 border mt-2"> Back to shop </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- summary -->
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+
+  <script>
+
+  function changeQuantity(cartId, proId,userId, count,pretotal) {
+     
+     let quantity = parseFloat(document.getElementById(proId).innerHTML) 
+  
+     count = parseFloat(count)
+  $.ajax({ 
+    url: '/change-product-quantity',
+     data: { 
+      user:userId,
+        cart: cartId, 
+     product:proId, 
+     count: count, 
+     quantity: quantity ,
+ pretotal:pretotal
+     }, 
+     method: 'post', 
+     success: (response) => {
+         if (response.removeproduct)
+          { alert("product removed from cart")
+  console.log("not problemmmmmm") 
+  location.reload() 
+    } else {
+  document.getElementById(proId).innerHTML = quantity + count
+document.getElementById('grandtotal').innerHTML= response.grandtotal
+document.getElementById('{{this.product.productname}}').innerHTML= response.pretotal
+
+
+
+  } } }) }
+</script>
+
+{{!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+<script>
+function confirmDelete(event,proId) {
+  event.preventDefault(); // Prevent the default behavior of the anchor tag
+
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'You are about to delete this item.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // If the user confirms, send an AJAX request to delete the item
+      
+      
+      $.ajax({
+        url: `/removeitem/${proId}`,
+        method: 'GET',
+  
+        success:(response) =>{
+          // Item deleted successfully
+          Swal.fire('Deleted!', 'The item has been deleted.', 'success');
+          location.reload()
+          // Perform any additional actions, such as updating the UI
+        },
+        error: function(error) {
+          // Error deleting the item
+          Swal.fire('Error!', 'An error occurred while deleting the item.', 'error');
+        }
+      });
+    }
+  });
+}
+</script>
+<script>
+  function coupon() {
+        let coupenName = document.getElementById('couponCodeInput').value
+        console.log(couponCodeInput, "comeeeeee")
+        $.ajax({
+            url: '/coupen-verify',
+            data: {
+                coupon:coupenName
+            },
+            method: 'post',
+            success: (response) => {
+                    document.getElementById('discount').innerHTML =response.discountAmount
+
+              console.log(response)
+                Swal.fire(
+                    'Good job!',
+                    'Your coupon is applied!',
+                    'success'
+                ).then(()=>{
+                     if (response) {
+                  console.log("done!!!!!")
+                    document.getElementById('grandtotal').innerHTML = response.amount
+                    document.getElementById("Details").hidden = false
+                    document.getElementById('totalPrice').innerHTML = response.originalPrice
+                    
+                    document.getElementById('savedPrice').innerHTML = response.savedAmount
+                    
+                }
+                else {
+                    if (response.invalidDate) {
+                        document.getElementById('errorMsg').innerHTML = response.invalidDateMsg
+                        setTimeout(() => {
+                            response.invalidDateMsg = null
+                        }, 3000)
+                    }
+                    else if (response.minAmount) {
+                        document.getElementById('errorMsg').innerHTML = response.minAmountMsg
+                        setTimeout(() => {
+                            response.minAmountMsg = null
+                            location.reload()
+                        }, 3000)
+                    }
+                    else if (response.invalidCoupen) {
+                        document.getElementById('errorMsg').innerHTML = response.invalidCoupenMsg
+                        setTimeout(() => {
+                            response.invalidCoupenMsg = null
+                            location.reload()
+                        }, 3000)
+                    }
+                }
+
+                })
+
+                
+               
+            }
+        })
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+
+<script>
+  function getCouponCode(couponCode) {
+  document.getElementById("couponCodeInput").value = couponCode;
+}
+
+</script>
+<script>
+Handlebars.registerHelper('isExpired', function(date) {
+  var currentDate = new Date();
+  var couponEndingDate = new Date(date);
+
+  return currentDate > couponEndingDate;
+});
+
+
+
+</script>
+
+

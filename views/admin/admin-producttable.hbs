@@ -1,0 +1,89 @@
+<!-- Table Start -->
+<div class="content">
+    <div class="container-fluid pt-4 px-4 col-sm-12">
+        <div class=" d-flex justify-content-end">
+<a href="/admin/addproductpage"> <button class="btn btn-success m-2">Add Product</button></a>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-12">
+                <div class="bg-white rounded h-100 p-4">
+                    <h2 class=" text-dark">Products</h2>
+                     <div class="bg-white rounded h-100 p-4 mb-2 mt-2">
+                    <table id="myproduct" class=" table table-hover text-dark ">
+                        <thead>
+                            <tr>
+                                
+                                <th scope=" col">Product Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">image</th>
+                        <th scope="col">Options</th>
+                        <th scope="col">Options</th>
+                        </tr>
+                        </thead>
+                        <tbody> {{#each allproducts}} <tr>
+                                <td>{{this.productname}}</td>
+                                <td>{{this.categoryname}}</td>
+                                <td>{{this.description}}</td>
+                                <td>{{this.price}}</td>
+                                <td><img style="width:30px;height:30px  " src="/pro-images/{{this.image.[0]}}" alt="">
+                                </td>
+                                <td>
+                                    <a href="/admin/editproduct/{{this._id}}" class="btn btn-info btn-sm">Edit</a>
+                                </td>
+                                <td> <a href="#" class="btn btn-info btn-sm"
+                                        onclick="confirmDelete(event, '{{this._id}}')">delete</a>  </td>
+                            </tr> {{/each}} </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+<script>
+    let table = new DataTable('#myproduct');
+</script>
+<script>
+    function confirmDelete(event, proId) {
+        event.preventDefault(); // Prevent the default behavior of the anchor tag
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to delete this item.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user confirms, send an AJAX request to delete the item
+
+
+                $.ajax({
+                    url: `/admin/deleteproduct/${proId}`,
+                    method: 'GET',
+
+                    success: (response) => {
+                        // Item deleted successfully
+                        Swal.fire('Deleted!', 'The item has been deleted.', 'success').then(() => {
+                            location.reload();
+                        })
+
+
+
+                    },
+
+                    error: function (error) {
+                        // Error deleting the item
+                        Swal.fire('Error!', 'An error occurred while deleting the item.', 'error');
+                    }
+                });
+            }
+        });
+    }
+</script>
