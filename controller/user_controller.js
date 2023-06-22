@@ -357,7 +357,7 @@ module.exports = {
     try {
       let products = await userHepler.getcartproductlist(req.body.userId);
       let cartcount = await userHepler.getcartcount(req.session.user._id);
-      let totalprice = req.session.amount;
+      let totalprice = req.body.amount;
       userId = req.session.user._id;
       console.log(userId, "check userIddddddddddddddd");
       const previousOrders = await orderHelper.getUserOrders(userId);

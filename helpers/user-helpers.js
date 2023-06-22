@@ -399,7 +399,7 @@ module.exports = {
 
     details.quantity = parseFloat(details.quantity);
     let pertotal = details.price * (details.quantity + details.count);
-    console.log(details.pertotal, ">>>>>>>>>>>>>>>>");
+    console.log(pertotal, ">>>>>>>>>>>>>>>>");
     return new Promise((resolve, reject) => {
       if (details.count == -0.25 && details.quantity == 0.25) {
         db.get()
@@ -478,7 +478,10 @@ module.exports = {
         ])
         .toArray();
 
-      resolve(grandtotal[0]?.grandtotal);
+      // resolve(grandtotal[0]?.grandtotal);
+      resolve(grandtotal[0] && grandtotal[0].grandtotal);
+
+      console.log('erorrrr');
     });
   },
 
