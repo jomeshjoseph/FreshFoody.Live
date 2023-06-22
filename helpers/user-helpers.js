@@ -700,7 +700,9 @@ module.exports = {
         ])
         .toArray();
 
-      resolve(total[0]?.total);
+      // resolve(total[0]?.total);
+      resolve(grandtotal[0] && grandtotal[0].grandtotal);
+
     });
   },
   applyCoupen: (details, userId, date, totalAmount) => {
