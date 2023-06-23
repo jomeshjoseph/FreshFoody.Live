@@ -399,7 +399,7 @@ module.exports = {
 
     details.quantity = parseFloat(details.quantity);
     let pertotal = details.price * (details.quantity + details.count);
-    console.log(pertotal, ">>>>>>>>>>>>>>>>");
+    console.log(details,details.count,details.price,details.quantity, ">>>>>>>>>>>>>>>>");
     return new Promise((resolve, reject) => {
       if (details.count == -0.25 && details.quantity == 0.25) {
         db.get()
@@ -426,7 +426,7 @@ module.exports = {
             }
           )
           .then(() => {
-            resolve({ status: true });
+            resolve({ status: true,pertotal});
           });
       }
     });
@@ -478,8 +478,8 @@ module.exports = {
         ])
         .toArray();
 
-      // resolve(grandtotal[0]?.grandtotal);
-      resolve(grandtotal[0] && grandtotal[0].grandtotal);
+      resolve(grandtotal[0]?.grandtotal);
+      // resolve(grandtotal[0] && grandtotal[0].grandtotal);
 
       console.log('erorrrr');
     });
@@ -700,8 +700,8 @@ module.exports = {
         ])
         .toArray();
 
-      // resolve(total[0]?.total);
-      resolve(grandtotal[0] && grandtotal[0].grandtotal);
+      resolve(total[0]?.total);
+      // resolve(grandtotal[0] && grandtotal[0].grandtotal);
 
     });
   },

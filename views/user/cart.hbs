@@ -84,10 +84,10 @@
                           <td>
                             <div class="">
                               <button type="button" class="btn btn-outline-primary btn-sm "
-                                onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',-0.250,'{{this.product.productname}}')">-</button>
+                                onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',-0.250,'{{total}}','{{this.product.price}}','{{@index}}')">-</button>
                               <span id="{{this.product._id}}">{{this.quantity}}</span>
                               <button class="btn btn-outline-danger btn-sm"
-                                onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',0.250,'{{this.product.productname}}')">+</button>
+                                onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',0.250,'{{total}}','{{this.product.price}}','{{@index}}')">+</button>
                             </div>
                           </td>
                           <td>
@@ -97,7 +97,13 @@
                           </td>
                           <td>
                             {{!-- <p class="mb-2">Total price:</p><p class="mb-2 fw-bold text-danger">₹{{total}}</p> --}}
-                            <h6 class="text-danger text-nowrap"><a class="text-muted">Total: </a>₹ {{total}}</h6>
+                            {{!-- <h6 class="text-danger text-nowrap"><a class="text-muted">Total: </a>₹ {{total}}</h6> --}}
+                            {{!-- <h6 class="text-danger text-nowrap"><a class="text-muted">Total: </a><span id="total-{{this.product._id}}">₹ {{total}}</span></h6> --}}
+
+
+                            <h6 class="text-danger text-nowrap"><a class="text-muted">Total: </a>₹ <span class="pretotal-element">{{total}}</span></h6>
+                            
+
                           </td>
                           <td> <div class="float-md-end ml-2">
                         <a href="#!" class="btn btn-light border px-2 icon-hover-primary"><i
@@ -134,7 +140,7 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between">
                     <p class="mb-2">Total price:</p>
-                    <p class="mb-2">₹{{grandtotal}}</p>
+                    <p id="grand" class="mb-2">₹{{grandtotal}}</p>
                   </div>
                   <div class="d-flex justify-content-between">
                     <p class="mb-2">Discount:</p>
@@ -167,7 +173,7 @@
 
   <script>
 
-  function changeQuantity(cartId, proId,userId, count,pretotal) {
+  function changeQuantity(cartId, proId,userId, count,pretotal,price,i) {
      
      let quantity = parseFloat(document.getElementById(proId).innerHTML) 
   
@@ -180,7 +186,8 @@
      product:proId, 
      count: count, 
      quantity: quantity ,
- pretotal:pretotal
+ pretotal:pretotal,
+ price:price
      }, 
      method: 'post', 
      success: (response) => {
@@ -189,11 +196,14 @@
   console.log("not problemmmmmm") 
   location.reload() 
     } else {
+      console.log(response)
   document.getElementById(proId).innerHTML = quantity + count
+document.getElementById('grand').innerHTML= response.grandtotal
 document.getElementById('grandtotal').innerHTML= response.grandtotal
-document.getElementById('{{this.product.productname}}').innerHTML= response.pretotal
-
-
+document.getElementsByClassName('pretotal-element')[i].innerHTML= response.pertotal
+document.getElementById('{{this.product.productname}}').innerHTML= response.pertotal
+                
+ 
 
   } } }) }
 </script>
