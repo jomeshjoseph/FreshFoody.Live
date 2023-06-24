@@ -318,7 +318,6 @@ module.exports = {
       }
     });
   },
-
   getcartproducts: (userId) => {
     return new Promise(async (resolve, reject) => {
       let cartitems = await db
@@ -359,7 +358,16 @@ module.exports = {
               product: 1,
               total: {
                 $sum: {
-                  $multiply: ["$quantity", { $toInt: "$product.price" }],
+                  $multiply: [
+                    "$quantity",
+                    {
+                      $cond: {
+                        if: { $ifNull: ["$product.offerPrice", false] },
+                        then: { $toInt: "$product.offerPrice" },
+                        else: { $toInt: "$product.price" },
+                      },
+                    },
+                  ],
                 },
               },
             },
@@ -367,10 +375,65 @@ module.exports = {
         ])
         .toArray();
       console.log(cartitems);
-
+  
       resolve(cartitems);
     });
   },
+  
+  
+
+  // getcartproducts: (userId) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     let cartitems = await db
+  //       .get()
+  //       .collection(collections.CART_COLLECTION)
+  //       .aggregate([
+  //         {
+  //           $match: { user: ObjectId(userId) },
+  //         },
+  //         {
+  //           $unwind: "$products",
+  //         },
+  //         {
+  //           $project: {
+  //             item: "$products.item",
+  //             quantity: "$products.quantity",
+  //           },
+  //         },
+  //         {
+  //           $lookup: {
+  //             from: collections.PRODUCT_COLLECTION,
+  //             localField: "item",
+  //             foreignField: "_id",
+  //             as: "product",
+  //           },
+  //         },
+  //         {
+  //           $project: {
+  //             item: 1,
+  //             quantity: 1,
+  //             product: { $arrayElemAt: ["$product", 0] },
+  //           },
+  //         },
+  //         {
+  //           $project: {
+  //             item: 1,
+  //             quantity: 1,
+  //             product: 1,
+  //             total: {
+  //               $sum: {
+  //                 $multiply: ["$quantity", { $toInt: "$product.price" }],
+  //               },
+  //             },
+  //           },
+  //         },
+  //       ])
+  //       .toArray();
+  //     console.log(cartitems);
+
+  //     resolve(cartitems);
+  //   });
+  // },
   //   removefromcart:(cartId)=>{
   //     return new Promise((resolve, reject) => {
   //       db.get().collection(collections.CART_COLLECTION).deleteOne({ _id: ObjectId(proId) }).then((response) => {

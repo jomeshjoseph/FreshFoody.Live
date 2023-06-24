@@ -598,4 +598,16 @@ module.exports = {
       }
     });
   },
+
+  deleteCoupen: (coupenId) => {
+    return new Promise((resolve, reject) => {
+        db.get().collection(collections.COUPON_COLLECTION).deleteOne({ _id: ObjectId(coupenId) }).then((response) => {
+            resolve(response)
+        })
+    })
+},
+
+
+
+
 };

@@ -92,7 +92,11 @@
                           </td>
                           <td>
                             <div >
+                               {{#if this.product.offerPrice}}
+<h6 class="text-muted text-nowrap">Rs.{{this.product.offerPrice}}<a class="text-muted">/per Kg</a></h6>
+ {{else}}
                               <h6 class="text-muted text-nowrap">Rs.{{this.product.price}}<a class="text-muted">/per Kg</a></h6>
+                          {{/if}}
                             </div>
                           </td>
                           <td>
@@ -102,6 +106,9 @@
 
 
                             <h6 class="text-danger text-nowrap"><a class="text-muted">Total: </a>₹ <span class="pretotal-element">{{total}}</span></h6>
+{{!-- <div id="price-container"> --}}
+  
+</div>
                             
 
                           </td>
@@ -173,7 +180,7 @@
 
   <script>
 
-  function changeQuantity(cartId, proId,userId, count,pretotal,price,i) {
+  function changeQuantity(cartId, proId,userId, count,pretotal,price,i,offerPrice) {
      
      let quantity = parseFloat(document.getElementById(proId).innerHTML) 
   
@@ -187,7 +194,8 @@
      count: count, 
      quantity: quantity ,
  pretotal:pretotal,
- price:price
+ price:price,
+ offerPrice:offerPrice
      }, 
      method: 'post', 
      success: (response) => {
@@ -324,4 +332,4 @@ Handlebars.registerHelper('isExpired', function(date) {
 
 </script>
 
-
+<!-- Assuming you have the product object available -->

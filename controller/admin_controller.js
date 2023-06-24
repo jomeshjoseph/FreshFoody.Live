@@ -332,7 +332,13 @@ console.log(proId);
         }catch(error){
 console.error('error in sales',error)
         }
-    })
+    }),
+    removeCoupen (req , res){
+        let coupenId = req.params.id
+       adminHepler.deleteCoupen(coupenId).then((response) => {
+            res.redirect('/admin//offer')
+        })
+    },
             
     
     
