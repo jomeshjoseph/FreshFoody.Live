@@ -104,8 +104,8 @@
                             {{!-- <h6 class="text-danger text-nowrap"><a class="text-muted">Total: </a>₹ {{total}}</h6> --}}
                             {{!-- <h6 class="text-danger text-nowrap"><a class="text-muted">Total: </a><span id="total-{{this.product._id}}">₹ {{total}}</span></h6> --}}
 
-
-                            <h6 class="text-danger text-nowrap"><a class="text-muted">Total: </a>₹ <span class="pretotal-element">{{total}}</span></h6>
+{{!-- 
+                            <h6 class="text-danger text-nowrap"><a class="text-muted">Total: </a>₹ <span class="pretotal-element">{{total}}</span></h6> --}}
 {{!-- <div id="price-container"> --}}
   
 </div>
@@ -275,6 +275,7 @@ function confirmDelete(event,proId) {
                      if (response) {
                   console.log("done!!!!!")
                     document.getElementById('grandtotal').innerHTML = response.amount
+                     document.getElementById('grandtotalsend').value = response.amount
                     document.getElementById("Details").hidden = false
                     document.getElementById('totalPrice').innerHTML = response.originalPrice
                     

@@ -289,7 +289,7 @@ module.exports = {
     let products = await userHepler.getcartproducts(req.session.user._id);
     let cartcount = await userHepler.getcartcount(req.session.user._id);
     let grandtotal = await userHepler.getgrandtotal(req.session.user._id);
-    
+    req.session.amount=grandtotal;
     let coupens = await userHepler.getcurrentcoupen();
     // req.session.amount = grandtotal;
     console.log(coupens, "coupensssss");
@@ -335,8 +335,8 @@ module.exports = {
     });
   },
   getorderpage: async (req, res) => {
-    let grandtotal = await userHepler.getgrandtotal(req.session.user._id);
-    // let grandtotal=req.body.grandtotal
+    // let grandtotal = await userHepler.getgrandtotal(req.session.user._id);
+    let grandtotal=req.session.amount
     let cartcount = await userHepler.getcartcount(req.session.user._id);
     if (req.session.loggedIn) {
       let user = req.session.user;
@@ -359,8 +359,8 @@ module.exports = {
       let products = await userHepler.getcartproductlist(req.body.userId);
       let cartcount = await userHepler.getcartcount(req.session.user._id);
       // let totalprice = await userHelpers.getTotalAmount(req.session.user._id)
-      let totalprice = await userHepler.getgrandtotal(req.session.user._id);
-      // let totalprice=req.body.grandtotal
+      // let totalprice = await userHepler.getgrandtotal(req.session.user._id);
+      let totalprice=req.session.amount
       userId = req.session.user._id;
       console.log(userId,totalprice, "check userIddddddddddddddd");
       const previousOrders = await orderHelper.getUserOrders(userId);
@@ -397,6 +397,10 @@ module.exports = {
                 res.status(500).json({ error: errorMessage });
               });
           }
+
+
+
+          
         });
     } catch (error) {
       console.log(error);

@@ -533,7 +533,16 @@ module.exports = {
               _id: null,
               grandtotal: {
                 $sum: {
-                  $multiply: ["$quantity", { $toInt: "$product.price" }],
+                  $multiply: [
+                    "$quantity",
+                    {
+                      $cond: {
+                        if: { $ifNull: ["$product.offerPrice", false] },
+                        then: { $toInt: "$product.offerPrice" },
+                        else: { $toInt: "$product.price" },
+                      },
+                    },
+                  ],
                 },
               },
             },
